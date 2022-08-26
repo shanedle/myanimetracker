@@ -29,16 +29,14 @@ const handleInput = (e) => {
 const addAnime = (anime) => {
   search_results.value = [];
   query.value = "";
-  if (anime !== my_anime.value) {
-    my_anime.value.push({
-      id: anime.mal_id,
-      title: anime.title,
-      image: anime.images.jpg.image_url,
-      total_episodes: anime.episodes,
-      watched_episodes: 0,
-    });
-    localStorage.setItem("my_anime", JSON.stringify(my_anime.value));
-  }
+  my_anime.value.push({
+    id: anime.mal_id,
+    title: anime.title,
+    image: anime.images.jpg.image_url,
+    total_episodes: anime.episodes,
+    watched_episodes: 0,
+  });
+  localStorage.setItem("my_anime", JSON.stringify(my_anime.value));
 };
 
 const removeAnime = (anime) => {
@@ -72,7 +70,9 @@ onMounted(() => {
         v-model="query"
         @input="handleInput"
       />
-      <button type="submit" class="button search_btn">Search</button>
+      <button type="submit" class="button search_btn">
+        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+      </button>
     </form>
 
     <div class="results" v-if="search_results.length > 0">
@@ -112,7 +112,9 @@ onMounted(() => {
         >
           +
         </button>
-        <button class="button" @click="removeAnime(anime)">Remove</button>
+        <button class="button" @click="removeAnime(anime)">
+          <font-awesome-icon icon="fa-solid fa-trash-can" />
+        </button>
       </div>
     </div>
   </main>
