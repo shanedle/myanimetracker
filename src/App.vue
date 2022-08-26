@@ -33,6 +33,10 @@ const addAnime = (anime) => {
     id: anime.mal_id,
     title: anime.title,
     image: anime.images.jpg.image_url,
+    score: anime.score,
+    status: anime.status,
+    aired_from: anime.aired.from,
+    aired_to: anime.aired.to,
     total_episodes: anime.episodes,
     watched_episodes: 0,
   });
@@ -52,6 +56,11 @@ const increaseWatch = (anime) => {
 const decreaseWatch = (anime) => {
   anime.watched_episodes--;
   localStorage.setItem("my_anime", JSON.stringify(my_anime.value));
+};
+
+const formatDate = (date) => {
+  const tzOffset = date.getTimezoneOffset() * 60 * 1000;
+  return new Date(date - tzOffset).toISOString().split("T")[0];
 };
 
 onMounted(() => {
@@ -80,9 +89,15 @@ onMounted(() => {
         <img :src="anime.images.jpg.image_url" />
         <div class="details">
           <h3>{{ anime.title }}</h3>
-          <p :title="anime.synopsis" v-if="anime.synopsis">
-            {{ anime.synopsis.slice(0, 120) }}...
+          <p v-if="anime.aired.from && anime.aired.to">
+            Aired: {{ anime.aired.from }} to {{ anime.aired.to }}
           </p>
+          <p v-else-if="anime.aired.from && !anime.aired.to">
+            Aired: {{ anime.aired.from }}
+          </p>
+          <p v-if="anime.score">Score: {{ anime.score }}</p>
+          <p v-else="anime.score">Score: ?</p>
+          <p>Status: {{ anime.status }}</p>
           <span class="flex-1"></span>
           <button @click="addAnime(anime)" class="button">Add to list</button>
         </div>
