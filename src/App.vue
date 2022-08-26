@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import moment from "moment";
 
 const query = ref("");
 const my_anime = ref([]);
@@ -58,10 +59,7 @@ const decreaseWatch = (anime) => {
   localStorage.setItem("my_anime", JSON.stringify(my_anime.value));
 };
 
-const formatDate = (date) => {
-  const tzOffset = date.getTimezoneOffset() * 60 * 1000;
-  return new Date(date - tzOffset).toISOString().split("T")[0];
-};
+const formattedDate = (date) => moment(date).format("MMM D, YYYY");
 
 onMounted(() => {
   my_anime.value = JSON.parse(localStorage.getItem("my_anime")) || [];
@@ -90,10 +88,11 @@ onMounted(() => {
         <div class="details">
           <h3>{{ anime.title }}</h3>
           <p v-if="anime.aired.from && anime.aired.to">
-            Aired: {{ anime.aired.from }} to {{ anime.aired.to }}
+            Aired: {{ formattedDate(anime.aired.from) }} to
+            {{ formattedDate(anime.aired.to) }}
           </p>
           <p v-else-if="anime.aired.from && !anime.aired.to">
-            Aired: {{ anime.aired.from }}
+            Aired: {{ formattedDate(anime.aired.from) }}
           </p>
           <p v-if="anime.score">Score: {{ anime.score }}</p>
           <p v-else="anime.score">Score: ?</p>
