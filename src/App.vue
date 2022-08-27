@@ -12,9 +12,9 @@ const my_anime_asc = computed(() => {
   });
 });
 
-const searchAnime = () => {
+const searchAnime = async () => {
   const url = `https://api.jikan.moe/v4/anime?q=${query.value}`;
-  fetch(url)
+  await fetch(url)
     .then((res) => res.json())
     .then((data) => {
       search_results.value = data.data;
