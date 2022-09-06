@@ -103,33 +103,35 @@ onMounted(() => {
       </div>
     </div>
 
-    <div class="my-anime" v-if="my_anime.length > 0">
-      <div v-for="anime in my_anime_asc" class="anime">
-        <img :src="anime.image" />
-        <h3>{{ anime.title }}</h3>
-        <div class="flex-1"></div>
-        <span class="episodes"
-          >{{ anime.watched_episodes }} / {{ anime.total_episodes }}</span
-        >
+    <section>
+      <div class="my-anime" v-if="my_anime.length > 0">
+        <div v-for="anime in my_anime_asc" class="anime">
+          <img :src="anime.image" />
+          <h3>{{ anime.title }}</h3>
+          <div class="flex-1"></div>
+          <span class="episodes"
+            >{{ anime.watched_episodes }} / {{ anime.total_episodes }}</span
+          >
 
-        <button
-          v-if="anime.watched_episodes > 0"
-          @click="decreaseWatch(anime)"
-          class="button"
-        >
-          -
-        </button>
-        <button
-          v-if="anime.total_episodes !== anime.watched_episodes"
-          @click="increaseWatch(anime)"
-          class="button"
-        >
-          +
-        </button>
-        <button class="button" @click="removeAnime(anime)">
-          <font-awesome-icon icon="fa-solid fa-trash-can" />
-        </button>
+          <button
+            v-if="anime.watched_episodes > 0"
+            @click="decreaseWatch(anime)"
+            class="button"
+          >
+            -
+          </button>
+          <button
+            v-if="anime.total_episodes !== anime.watched_episodes"
+            @click="increaseWatch(anime)"
+            class="button"
+          >
+            +
+          </button>
+          <button class="button" @click="removeAnime(anime)">
+            <font-awesome-icon icon="fa-solid fa-trash-can" />
+          </button>
+        </div>
       </div>
-    </div>
+    </section>
   </main>
 </template>
