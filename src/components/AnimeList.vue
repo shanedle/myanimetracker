@@ -12,59 +12,81 @@ const sortedAnime = computed(() => {
 </script>
 
 <template>
-  <div class="space-y-4">
+  <div class="px-4 sm:px-0">
     <template v-if="myAnimeList.length">
-      <div
+      <v-card
         v-for="anime in sortedAnime"
         :key="anime.id"
-        class="bg-white rounded-lg shadow p-4 flex items-center gap-4"
+        class="mb-4"
+        variant="outlined"
       >
-        <img
-          :src="anime.image"
-          :alt="anime.title"
-          class="w-16 h-16 object-cover rounded-lg"
-        />
+        <div class="d-flex flex-column flex-sm-row pa-3 gap-3">
+          <v-img
+            :src="anime.image"
+            width="100"
+            height="150"
+            cover
+            class="rounded flex-grow-0"
+          />
 
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold">{{ anime.title }}</h3>
-        </div>
+          <div class="flex-grow-1">
+            <div class="d-flex flex-column flex-sm-row gap-3 align-sm-center">
+              <h3 class="text-h6">{{ anime.title }}</h3>
 
-        <div class="flex items-center gap-4">
-          <span class="text-gray-600">
-            {{ anime.watched_episodes }} / {{ anime.total_episodes }}
-          </span>
+              <div class="d-flex align-center gap-2 ms-sm-auto">
+                <span class="text-body-2">
+                  {{ anime.watched_episodes }} / {{ anime.total_episodes }}
+                </span>
 
-          <div class="flex gap-2">
-            <v-btn
-              v-if="anime.watched_episodes > 0"
-              icon="mdi-minus"
-              variant="text"
-              size="small"
-              @click="updateEpisodes(anime, false)"
-            />
+                <v-btn
+                  v-if="anime.watched_episodes > 0"
+                  icon="mdi-minus"
+                  variant="text"
+                  size="small"
+                  @click="updateEpisodes(anime, false)"
+                />
 
-            <v-btn
-              v-if="anime.watched_episodes < anime.total_episodes"
-              icon="mdi-plus"
-              variant="text"
-              size="small"
-              @click="updateEpisodes(anime, true)"
-            />
+                <v-btn
+                  v-if="anime.watched_episodes < anime.total_episodes"
+                  icon="mdi-plus"
+                  variant="text"
+                  size="small"
+                  @click="updateEpisodes(anime, true)"
+                />
 
-            <v-btn
-              icon="mdi-delete"
-              variant="text"
-              color="error"
-              size="small"
-              @click="removeAnime(anime)"
-            />
+                <v-btn
+                  icon="mdi-delete"
+                  variant="text"
+                  color="error"
+                  size="small"
+                  @click="removeAnime(anime)"
+                />
+              </div>
+            </div>
+
+            <div class="mt-2 text-body-2">
+              <div class="d-flex align-center">
+                <v-icon
+                  color="amber"
+                  icon="mdi-star"
+                  size="small"
+                  class="mr-1"
+                />
+                {{ anime.score || "N/A" }}
+              </div>
+              <div>Status: {{ anime.status }}</div>
+            </div>
           </div>
         </div>
-      </div>
+      </v-card>
     </template>
 
-    <div v-else class="text-center py-8 text-gray-500">
-      No anime in your list yet. Search and add some anime!
-    </div>
+    <v-card v-else class="pa-6 text-center" variant="outlined">
+      <v-icon icon="mdi-playlist-plus" size="48" class="mb-2" />
+      <div class="text-h6 mb-2">Your list is empty</div>
+      <div class="text-body-2 text-medium-emphasis">
+        Search and add some anime to your list!
+      </div>
+    </v-card>
   </div>
 </template>

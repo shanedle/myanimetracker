@@ -1,5 +1,4 @@
 import { ref } from "vue";
-
 import type { Anime } from "@/types";
 
 export function useAnimeSearch() {

@@ -1,48 +1,27 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
+import { useTheme } from "@/composables/useTheme";
+import { useAnimeStorage } from "@/composables/useAnimeStorage";
+import Navbar from "@/components/Navbar.vue";
 
-import type { Anime } from "./types";
+const { isDark } = useTheme();
+const { loadAnime } = useAnimeStorage();
 
-import { useAnimeStorage } from "./composables/useAnimeStorage";
-
-import AnimeSearch from "./components/AnimeSearch.vue";
-import AnimeList from "./components/AnimeList.vue";
-
-const { loadAnime, addAnime } = useAnimeStorage();
-
-const handleAddAnime = (anime: Anime) => {
-  const newAnime = {
-    id: anime.mal_id,
-    title: anime.title,
-    image: anime.images.jpg.image_url,
-    score: anime.score,
-    status: anime.status,
-    aired_from: anime.aired.from,
-    aired_to: anime.aired.to,
-    total_episodes: anime.episodes,
-    watched_episodes: 0,
-  };
-
-  addAnime(newAnime);
-};
+watch(isDark, (newValue) => {
+  document.documentElement.classList.toggle("dark", newValue);
+});
 
 onMounted(() => {
   loadAnime();
+  document.documentElement.classList.toggle("dark", isDark.value);
 });
 </script>
 
 <template>
-  <v-app class="bg-primary min-h-screen">
+  <v-app :theme="isDark ? 'dark' : 'light'">
+    <Navbar />
     <v-main>
-      <v-container class="max-w-4xl mx-auto">
-        <h1 class="text-center text-4xl font-bold text-white mb-8">
-          MyAnimeTracker
-        </h1>
-        <div class="bg-white rounded-lg shadow-lg p-6">
-          <AnimeSearch @add-anime="handleAddAnime" />
-          <AnimeList />
-        </div>
-      </v-container>
+      <router-view />
     </v-main>
   </v-app>
 </template>

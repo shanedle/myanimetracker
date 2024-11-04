@@ -26,6 +26,9 @@ importers:
       vue:
         specifier: ^3.5.12
         version: 3.5.12(typescript@5.6.3)
+      vue-router:
+        specifier: '4'
+        version: 4.4.5(vue@3.5.12(typescript@5.6.3))
     devDependencies:
       '@types/node':
         specifier: ^22.8.7
@@ -395,6 +398,9 @@ packages:
 
   '@vue/compiler-ssr@3.5.12':
     resolution: {integrity: sha512-eLwc7v6bfGBSM7wZOGPmRavSWzNFF6+PdRhE+VFJhNCgHiF8AM7ccoqcv5kBXA2eWUfigD7byekvf/JsOfKvPA==}
+
+  '@vue/devtools-api@6.6.4':
+    resolution: {integrity: sha512-sGhTPMuXqZ1rVOk32RylztWkfXTRhuS7vgAKv0zjqk8gbsHkJ7xfFf+jbySxt7tWObEJwyKaHMikV/WGDiQm8g==}
 
   '@vue/reactivity@3.5.12':
     resolution: {integrity: sha512-UzaN3Da7xnJXdz4Okb/BGbAaomRHc3RdoWqTzlvd9+WBR5m3J39J1fGcHes7U3za0ruYn/iYy/a1euhMEHvTAg==}
@@ -913,6 +919,11 @@ packages:
       terser:
         optional: true
 
+  vue-router@4.4.5:
+    resolution: {integrity: sha512-4fKZygS8cH1yCyuabAXGUAsyi1b2/o/OKgu/RUb+znIYOxPRxdkytJEx+0wGcpBE1pX6vUgh5jwWOKRGvuA/7Q==}
+    peerDependencies:
+      vue: ^3.2.0
+
   vue@3.5.12:
     resolution: {integrity: sha512-CLVZtXtn2ItBIi/zHZ0Sg1Xkb7+PU32bJJ8Bmy7ts3jxXTcbfsEfBivFYYWz1Hur+lalqGAh65Coin0r+HRUfg==}
     peerDependencies:
@@ -1193,6 +1204,8 @@ snapshots:
     dependencies:
       '@vue/compiler-dom': 3.5.12
       '@vue/shared': 3.5.12
+
+  '@vue/devtools-api@6.6.4': {}
 
   '@vue/reactivity@3.5.12':
     dependencies:
@@ -1700,6 +1713,11 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.8.7
       fsevents: 2.3.3
+
+  vue-router@4.4.5(vue@3.5.12(typescript@5.6.3)):
+    dependencies:
+      '@vue/devtools-api': 6.6.4
+      vue: 3.5.12(typescript@5.6.3)
 
   vue@3.5.12(typescript@5.6.3):
     dependencies:

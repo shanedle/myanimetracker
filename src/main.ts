@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-
+import { createRouter, createWebHistory } from "vue-router";
 import App from "./App.vue";
 
 import "vuetify/styles";
@@ -11,6 +11,17 @@ import "@mdi/font/css/materialdesignicons.css";
 
 import "./assets/tailwind.css";
 
+import HomePage from "./views/HomePage.vue";
+import MyListPage from "./views/MyListPage.vue";
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    { path: "/", component: HomePage },
+    { path: "/my-list", component: MyListPage },
+  ],
+});
+
 const vuetify = createVuetify({
   components,
   directives,
@@ -21,6 +32,9 @@ const vuetify = createVuetify({
       mdi,
     },
   },
+  theme: {
+    defaultTheme: "light",
+  },
 });
 
-createApp(App).use(vuetify).mount("#app");
+createApp(App).use(router).use(vuetify).mount("#app");
