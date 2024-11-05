@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AnimeList from "@/components/AnimeList.vue";
+import Container from "@/components/Container.vue";
 import { useAnimeSearch } from "@/composables/useAnimeSearch";
 import { useAnimeStorage } from "@/composables/useAnimeStorage";
 import type { Anime } from "@/types";
@@ -35,69 +36,71 @@ const formattedDate = (date: string) => moment(date).format("MMM D, YYYY");
 
 <template>
   <div class="py-6">
-    <h1 class="text-h4 font-weight-bold mb-6 px-4 sm:px-6">My Anime List</h1>
+    <Container>
+      <h2 class="mb-4 text-xl font-bold sm:text-2xl">My Anime List</h2>
 
-    <div class="px-4 sm:px-6 mb-6">
-      <v-form @submit.prevent="handleSearch">
-        <v-text-field
-          v-model="query"
-          placeholder="Search Anime..."
-          prepend-inner-icon="mdi-magnify"
-          variant="outlined"
-          density="comfortable"
-          hide-details
-        />
-      </v-form>
+      <div class="mb-6">
+        <v-form @submit.prevent="handleSearch">
+          <v-text-field
+            v-model="query"
+            placeholder="Search Anime..."
+            prepend-inner-icon="mdi-magnify"
+            variant="outlined"
+            density="comfortable"
+            hide-details
+          />
+        </v-form>
 
-      <div v-if="searchResults.length" class="mt-4">
-        <v-card
-          v-for="anime in searchResults"
-          :key="anime.mal_id"
-          class="mb-3"
-          variant="outlined"
-        >
-          <div class="d-flex flex-column flex-sm-row pa-3 gap-3">
-            <v-img
-              :src="anime.images.jpg.image_url"
-              width="120"
-              height="180"
-              cover
-              class="rounded flex-grow-0"
-            />
-            <div class="flex-grow-1">
-              <h3 class="text-h6 mb-2">{{ anime.title }}</h3>
-              <div class="text-body-2 mb-1">
-                <div v-if="anime.aired.from">
-                  Aired: {{ formattedDate(anime.aired.from) }}
-                  <template v-if="anime.aired.to">
-                    to {{ formattedDate(anime.aired.to) }}
-                  </template>
+        <div v-if="searchResults.length" class="mt-4">
+          <v-card
+            v-for="anime in searchResults"
+            :key="anime.mal_id"
+            class="mb-3"
+            variant="outlined"
+          >
+            <div class="d-flex flex-column flex-sm-row gap-3 pa-3">
+              <v-img
+                :src="anime.images.jpg.image_url"
+                width="120"
+                height="180"
+                cover
+                class="rounded flex-grow-0"
+              />
+              <div class="flex-grow-1">
+                <h3 class="mb-2 text-h6">{{ anime.title }}</h3>
+                <div class="mb-1 text-body-2">
+                  <div v-if="anime.aired.from">
+                    Aired: {{ formattedDate(anime.aired.from) }}
+                    <template v-if="anime.aired.to">
+                      to {{ formattedDate(anime.aired.to) }}
+                    </template>
+                  </div>
+                  <div class="d-flex align-center">
+                    <v-icon
+                      color="amber"
+                      icon="mdi-star"
+                      size="small"
+                      class="mr-1"
+                    />
+                    {{ anime.score || "N/A" }}
+                  </div>
+                  <div>Status: {{ anime.status }}</div>
                 </div>
-                <div class="d-flex align-center">
-                  <v-icon
-                    color="amber"
-                    icon="mdi-star"
-                    size="small"
-                    class="mr-1"
-                  />
-                  {{ anime.score || "N/A" }}
-                </div>
-                <div>Status: {{ anime.status }}</div>
+                <v-btn
+                  color="primary"
+                  variant="tonal"
+                  size="small"
+                  @click="handleAddAnime(anime)"
+                >
+                  Add to list
+                </v-btn>
               </div>
-              <v-btn
-                color="primary"
-                variant="tonal"
-                size="small"
-                @click="handleAddAnime(anime)"
-              >
-                Add to list
-              </v-btn>
             </div>
-          </div>
-        </v-card>
+          </v-card>
+        </div>
       </div>
-    </div>
 
-    <AnimeList />
+      <AnimeList />
+    </Container>
   </div>
 </template>

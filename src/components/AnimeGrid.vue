@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Anime } from "@/types";
 import { useAnimeStorage } from "@/composables/useAnimeStorage";
+import Container from "./Container.vue";
 
 defineProps<{
   title: string;
@@ -29,63 +30,70 @@ const handleAddAnime = (anime: Anime) => {
 
 <template>
   <div class="mb-8">
-    <h2 class="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-0">{{ title }}</h2>
-    <v-row v-if="!loading">
-      <v-col
-        v-for="anime in animes"
-        :key="anime.mal_id"
-        cols="6"
-        sm="4"
-        md="3"
-        lg="2"
-        class="pa-2"
-      >
-        <v-card class="h-100 d-flex flex-column">
-          <div class="anime-image-container">
-            <v-img
-              :src="anime.images.jpg.image_url"
-              cover
-              class="anime-image"
-            />
-          </div>
-          <v-card-title class="text-subtitle-2 text-sm-subtitle-1 py-2">
-            <div class="line-clamp-2">{{ anime.title }}</div>
-          </v-card-title>
-          <v-card-text class="py-2 flex-grow-1">
-            <div class="d-flex align-center mb-1">
-              <v-icon color="amber" icon="mdi-star" size="small" class="mr-1" />
-              <span class="text-body-2">{{ anime.score || "N/A" }}</span>
+    <Container>
+      <h2 class="mb-4 text-xl font-bold sm:text-2xl">{{ title }}</h2>
+      <v-row v-if="!loading">
+        <v-col
+          v-for="anime in animes"
+          :key="anime.mal_id"
+          cols="6"
+          sm="4"
+          md="3"
+          xl="2"
+          class="pa-2"
+        >
+          <v-card class="h-100 d-flex flex-column">
+            <div class="anime-image-container">
+              <v-img
+                :src="anime.images.jpg.image_url"
+                cover
+                class="anime-image"
+              />
             </div>
-            <div class="text-caption">
-              Episodes: {{ anime.episodes || "TBA" }}
-            </div>
-          </v-card-text>
-          <v-card-actions class="pa-2">
-            <v-btn
-              variant="tonal"
-              block
-              size="small"
-              @click="handleAddAnime(anime)"
-            >
-              Add to List
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-row v-else>
-      <v-col
-        v-for="n in 12"
-        :key="n"
-        cols="6"
-        sm="4"
-        md="3"
-        lg="2"
-        class="pa-2"
-      >
-        <v-skeleton-loader type="image, article" class="h-100" />
-      </v-col>
-    </v-row>
+            <v-card-title class="py-2 text-subtitle-2 text-sm-subtitle-1">
+              <div class="line-clamp-2">{{ anime.title }}</div>
+            </v-card-title>
+            <v-card-text class="flex-grow-1 py-2">
+              <div class="mb-1 d-flex align-center">
+                <v-icon
+                  color="amber"
+                  icon="mdi-star"
+                  size="small"
+                  class="mr-1"
+                />
+                <span class="text-body-2">{{ anime.score || "N/A" }}</span>
+              </div>
+              <div class="text-caption">
+                Episodes: {{ anime.episodes || "TBA" }}
+              </div>
+            </v-card-text>
+            <v-card-actions class="pa-2">
+              <v-btn
+                variant="tonal"
+                block
+                size="small"
+                @click="handleAddAnime(anime)"
+              >
+                Add to List
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row v-else>
+        <v-col
+          v-for="n in 12"
+          :key="n"
+          cols="6"
+          sm="4"
+          md="3"
+          xl="2"
+          class="pa-2"
+        >
+          <v-skeleton-loader type="image, article" class="h-100" />
+        </v-col>
+      </v-row>
+    </Container>
   </div>
 </template>
 
@@ -108,7 +116,6 @@ const handleAddAnime = (anime: Anime) => {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  line-clamp: 2;
   overflow: hidden;
 }
 </style>

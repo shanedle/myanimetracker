@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { useSharedState } from "@/composables/useSharedState";
 import { useAnimeStorage } from "@/composables/useAnimeStorage";
+import Container from "./Container.vue";
 
 const { myAnimeList } = useSharedState();
 const { updateEpisodes, removeAnime } = useAnimeStorage();
@@ -12,7 +13,7 @@ const sortedAnime = computed(() => {
 </script>
 
 <template>
-  <div class="px-4 sm:px-0">
+  <Container>
     <template v-if="myAnimeList.length">
       <v-card
         v-for="anime in sortedAnime"
@@ -20,7 +21,7 @@ const sortedAnime = computed(() => {
         class="mb-4"
         variant="outlined"
       >
-        <div class="d-flex flex-column flex-sm-row pa-3 gap-3">
+        <div class="d-flex flex-column flex-sm-row gap-3 pa-3">
           <v-img
             :src="anime.image"
             width="100"
@@ -83,10 +84,10 @@ const sortedAnime = computed(() => {
 
     <v-card v-else class="pa-6 text-center" variant="outlined">
       <v-icon icon="mdi-playlist-plus" size="48" class="mb-2" />
-      <div class="text-h6 mb-2">Your list is empty</div>
+      <div class="mb-2 text-h6">Your list is empty</div>
       <div class="text-body-2 text-medium-emphasis">
         Search and add some anime to your list!
       </div>
     </v-card>
-  </div>
+  </Container>
 </template>
